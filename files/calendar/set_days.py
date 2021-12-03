@@ -34,7 +34,8 @@ def set_months_days(pair_month,february=False, leapyear=False, startDayID=0):
     return months_days
 
 
-print(set_months_days(False))
+if __name__ == "__main__": 
+    print(set_months_days(False))
 
 
 

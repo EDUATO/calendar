@@ -17,11 +17,15 @@ class Calendar:
 
         self.cal = calendar.Calendar()
 
-        self.date = {}
+        self.date = {} # The real date
+        self.in_date = {} # The month/year the user is
 
-        self.set_day(day)
-        self.set_month(month)
-        self.set_year(year)
+        self.set_UI_date("Year", year)
+        self.set_UI_date("Month", month)
+
+        self.set_real_date("Year", year)
+        self.set_real_date("Month", month)
+        self.set_real_date("Day", day)
 
         self.days_labels = [ "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
@@ -38,12 +42,25 @@ class Calendar:
         self.events_data = {}
         self.loaded_events_data_id = []
         
+    def update(self, events):
+
+        self.grid_place = self.grid.get_hitbox()
+
+        # Callendar white background
+        pygame.draw.rect(win, (255,255,255), (self.grid_place[0], self.grid_place[2], self.grid_place[1], self.grid_place[3]))
+
+        self.grid.update()
+
+        # Update callendar data
+        self.get_calendar_month()
+        
+        self.write_text_in_calendar(events)
     
     def intialize_grid(self):
-        if not self.date["Day"] == 0:
+        if self.date["Month"] ==  self.in_date["Month"] and self.date["Year"] ==  self.in_date["Year"]:
             self.yearText = f'- {self.date["Day"]} of {self.months_labels[int(self.date["Month"])-1]}, {self.date["Year"]} -'
         else:
-            self.yearText = f'- {self.months_labels[int(self.date["Month"])-1]}, {self.date["Year"]} -'
+            self.yearText = f'- {self.months_labels[int(self.in_date["Month"])-1]}, {self.in_date["Year"]} -'
 
         # Make the grid
         self.grid = LabelGrid(
@@ -70,29 +87,38 @@ class Calendar:
             except AttributeError:
                 pass
 
-            # Write dates
-            if not self.calendar_data[i]["Day"][0] == 0:
+            if not self.calendar_data[i]["Day"][0] == 0: # Write only the valid dates
+
+                # Write dates
                 Text(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], str(self.calendar_data[i]["Day"][0]), Arial_60, (0,0,0), "xy", screen_areas=(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], self.box_size[0], self.box_size[1]) ).draw()
 
-            # Select Actual Day
-            if not self.calendar_data[i]["Day"][0] == 0:
-                if self.calendar_data[i]["Day"][0] == self.date["Day"]:
-                    self.grid.square( self.calendar_data[i]["Pos"][0],  self.calendar_data[i]["Pos"][1],  self.calendar_data[i]["Pos"][2], 
-                    self.calendar_data[i]["Pos"][3], (255,0,0), 5)
+                # PRINT DATES #
+                print(f"CAL_D: {self.calendar_data[i]['Day'][0]}")
+                print(f"DATE: {self.date['Day']}")
+
+                print(f"CAL_M: {self.calendar_data[i]['Month']}")
+                print(f"DATE: {self.date['Month']}")
+
+                print(f"CAL_M: {self.calendar_data[i]['Year']}")
+                print(f"DATE: {self.date['Year']}")
+
+                # Select Actual Day
+                if self.calendar_data[i]["Day"][0] == self.date["Day"] and self.calendar_data[i]["Month"] == self.date["Month"] and self.calendar_data[i]["Year"] == self.date["Year"]:
+
+                    self.grid.square( self.calendar_data[i]["Pos"][0],  self.calendar_data[i]["Pos"][1],  self.calendar_data[i]["Pos"][2], self.calendar_data[i]["Pos"][3], (255,0,0), 5)
 
                 # Find events
                 if bool(self.events_data): # If there's data
                     try:
-                        for mon in range(len(self.events_data[self.date["Year"]][self.months_labels[self.date["Month"]-1]])):
+                        for mon in range(len(self.events_data[self.in_date["Year"]][self.months_labels[self.in_date["Month"]-1]])):
                             
-                            if self.events_data[self.date["Year"]][self.months_labels[self.date["Month"]-1]][mon]["Day"] == self.calendar_data[i]["Day"][0]:
+                            if self.events_data[self.in_date["Year"]][self.months_labels[self.in_date["Month"]-1]][mon]["Day"] == self.calendar_data[i]["Day"][0]:
                                 self.grid.square( self.calendar_data[i]["Pos"][0],  self.calendar_data[i]["Pos"][1],  self.calendar_data[i]["Pos"][2], 
                                 self.calendar_data[i]["Pos"][3], (102,0,204), 5)
                     except KeyError:
                         pass
 
-                      
-                
+                    
                 # Day colliderecting with mouse 
                 if self.isColliderecting != None:
                     # Rect
@@ -188,12 +214,12 @@ class Calendar:
     def get_calendar_month(self):
         self.calendar_data = []
 
-        for day in self.cal.itermonthdays2(self.date["Year"], self.date["Month"]):
+        for day in self.cal.itermonthdays2(self.in_date["Year"], self.in_date["Month"]):
             
             self.calendar_data.append({
                 "Day":day, # (0 #date ,0 #Calendar order) 
-                "Month":int(self.date["Month"]),
-                "Year":int(self.date["Year"]),
+                "Month":int(self.in_date["Month"]),
+                "Year":int(self.in_date["Year"]),
                 "Pos":None}) # Position in grid
 
         # Set position
@@ -207,37 +233,19 @@ class Calendar:
 
             self.calendar_data[i]["Pos"] = self.grid_pos
 
-
-
-    def update(self, events):
-
-        self.grid_place = self.grid.get_hitbox()
-
-        pygame.draw.rect(win, (255,255,255), (self.grid_place[0], self.grid_place[2], self.grid_place[1], self.grid_place[3]))
-
-        self.grid.update()
-
-        self.get_calendar_month()
-        
-        self.write_text_in_calendar(events)
-
     def open_data_UI(self):
         print("Opened")
 
-    def set_year(self, year, init=False):
-        self.date["Year"] = year
+    # Real date setter
+    def set_real_date(self, id, value, init=False):
+        self.date[id] = value
         
         if init:
             self.intialize_grid()
 
-    def set_month(self, month, init=False):
-        self.date["Month"] = month
-            
-        if init:
-            self.intialize_grid()
-
-    def set_day(self, day, init=False):
-        self.date["Day"] = day
+    # Setter of the month/year the user is
+    def set_UI_date(self, id, value, init=False):
+        self.in_date[id] = value
         
         if init:
             self.intialize_grid()

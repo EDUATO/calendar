@@ -8,149 +8,17 @@
     "June": [],
     "July": [],
     "August": [],
-    "Setember": [
-        {
-            "Day": 5,
-            "Data": ""
-        },
-        {
-            "Day": 6,
-            "Data": ""
-        },
-        {
-            "Day": 11,
-            "Data": ""
-        },
-        {
-            "Day": 19,
-            "Data": ""
-        },
-        {
-            "Day": 10,
-            "Data": ""
-        },
-        {
-            "Day": 24,
-            "Data": ""
-        },
-        {
-            "Day": 4,
-            "Data": ""
-        },
-        {
-            "Day": 3,
-            "Data": ""
-        },
-        {
-            "Day": 2,
-            "Data": ""
-        },
-        {
-            "Day": 9,
-            "Data": ""
-        },
-        {
-            "Day": 16,
-            "Data": ""
-        },
-        {
-            "Day": 23,
-            "Data": ""
-        },
-        {
-            "Day": 22,
-            "Data": ""
-        },
-        {
-            "Day": 15,
-            "Data": ""
-        },
+    "Setember": [],
+    "October": [],
+    "November": [
         {
             "Day": 18,
-            "Data": ""
-        },
-        {
-            "Day": 17,
-            "Data": ""
-        },
-        {
-            "Day": 25,
-            "Data": ""
-        },
-        {
-            "Day": 26,
-            "Data": ""
-        },
-        {
-            "Day": 30,
-            "Data": ""
-        },
-        {
-            "Day": 29,
-            "Data": ""
-        },
-        {
-            "Day": 28,
-            "Data": ""
-        },
-        {
-            "Day": 27,
-            "Data": ""
-        },
-        {
-            "Day": 20,
-            "Data": ""
-        },
-        {
-            "Day": 21,
-            "Data": ""
-        },
-        {
-            "Day": 14,
-            "Data": ""
-        },
-        {
-            "Day": 13,
-            "Data": ""
-        },
-        {
-            "Day": 7,
-            "Data": ""
-        },
-        {
-            "Day": 8,
-            "Data": ""
-        },
-        {
-            "Day": 1,
             "Data": ""
         }
     ],
-    "October": [],
-    "November": [],
     "December": [
         {
-            "Day": 24,
-            "Data": ""
-        },
-        {
-            "Day": 26,
-            "Data": ""
-        },
-        {
-            "Day": 18,
-            "Data": ""
-        },
-        {
-            "Day": 16,
-            "Data": ""
-        },
-        {
-            "Day": 11,
-            "Data": ""
-        },
-        {
-            "Day": 21,
+            "Day": 10,
             "Data": ""
         }
     ]

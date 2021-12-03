@@ -1,6 +1,10 @@
+# Pycache stuff
 __pycache__
 files/__pycache__
 files/calendar/__pycache__
 files/UI/__pycache__
+
+# VSCode cache
 .vscode
+
 fonts
