@@ -5,18 +5,24 @@ from files.vars import *
 import files.bucle as b
 
 class Grid:
-    def __init__(self, box_size, color, width_line, GRIDSIZE=[[0, b.modeX], [0, b.modeY]], squareNumber=None):
+    def __init__(
+                self, box_size, color, width_line, 
+                squareNumber=None, # squareNumber, can be None or a tuple with the amount of cells for y and x. Each cell will have the size of box_size
+                _manualGRIDSIZE=[[0, b.modeX], [0, b.modeY]],  # If squareNumber is false, you can add the columns and rows manually.
+                ):
+
         self.box_size = box_size
         self.color = color
         self.width_line = width_line
+        self.squareNumber = squareNumber
 
         if squareNumber == None:
-            self.X_GRIDSIZE = GRIDSIZE[0] # 0:Coords, 1:Width
-            self.Y_GRIDSIZE = GRIDSIZE[1]
+            self.X_GRIDSIZE = _manualGRIDSIZE[0] # 0:Coords, 1:Width
+            self.Y_GRIDSIZE = _manualGRIDSIZE[1]
 
         else:
-            self.X_GRIDSIZE = [0, box_size[0] * squareNumber[0]]
-            self.Y_GRIDSIZE = [0 , box_size[1] * squareNumber[1]]
+            self.X_GRIDSIZE = [0, box_size[0] * self.squareNumber[0]]
+            self.Y_GRIDSIZE = [0 , box_size[1] * self.squareNumber[1]]
 
         self.gridPositions = {}
 

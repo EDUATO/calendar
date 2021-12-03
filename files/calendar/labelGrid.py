@@ -8,9 +8,9 @@ from files.UI.Text import Text
 from files.fonts import Arial_60
 
 class LabelGrid(Grid):
-    def __init__(self, box_size, color, width_line, GRIDSIZE=[[0, b.modeX], [0, b.modeY]], squareNumber=None, labels_data=[(40,"Regular",5, (255,0,0), ["May", "June"], Arial_60)]):
+    def __init__(self, box_size, color, width_line, squareNumber=None, _manualGRIDSIZE=[[0, b.modeX], [0, b.modeY]], labels_data=[(40,"Regular",5, (255,0,0), ["May", "June"], Arial_60)]):
 
-        super().__init__(box_size, color, width_line, GRIDSIZE, squareNumber)
+        super().__init__(box_size, color, width_line, squareNumber,_manualGRIDSIZE )
 
         self.labels_data = labels_data
 

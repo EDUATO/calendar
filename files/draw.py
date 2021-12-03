@@ -10,7 +10,7 @@ from files.UI.Text import Text
 import files.calendar.calendar_engine as c
 
 def update_current_day():
-	global current_date, cur_year, cur_month, cur_day, calendar_1, calendar_year, calendar_month, calendar_day
+	global cur_year, cur_month, cur_day
 	current_date = date.today()
 
 	# Keep updating current dates
@@ -20,6 +20,7 @@ def update_current_day():
 
 update_current_day()
 
+# The dates where the 
 calendar_year = cur_year
 calendar_month = cur_month
 calendar_day = cur_day
@@ -27,7 +28,7 @@ calendar_day = cur_day
 calendar_1 = c.Calendar(year=calendar_year, month=calendar_month, day=calendar_day)
 
 def Draw(events):
-	global calendar_year, calendar_month, calendar_day, calendar_1, cur_day, cur_month, cur_year, current_date
+	global calendar_year, calendar_month, calendar_day
 	
 	update_current_day()
 
@@ -37,11 +38,9 @@ def Draw(events):
 	
 	calendar_1.update(events)
 
-	# Show time
+	# Draw time
 	time = datetime.now()
-
 	time_string = Text(0, 640, time.strftime("%H:%M:%S"), Arial_40, (255,255,255), lock="x")
-
 	time_string.draw()
 
 
@@ -64,14 +63,11 @@ def Draw(events):
 				else:
 					calendar_month -= 1
 
-	# See if the day/month/year has changed
+	# See if the day, month and year corresponds to the current time
 	calendar_day = 0
 	if int(calendar_month) == int(cur_month):
 		if int(calendar_year) == int(cur_year):
+			# If correnponds, that's the day 
 			calendar_day = cur_day
-
-	calendar_1.set_day(calendar_day, init=True)
-	calendar_1.set_month(calendar_month, init=True)
-	calendar_1.set_year(calendar_year, init=True)
 
 			
