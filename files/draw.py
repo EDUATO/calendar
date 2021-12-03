@@ -31,9 +31,15 @@ def Draw(events):
 	
 	update_current_date()
 
+	# Update the month/year where the user is
 	calendar_1.set_UI_date("Month", value=calendar_month, init=True)
 	calendar_1.set_UI_date("Year", value=calendar_year, init=True)
 	
+	# Update the current date
+	calendar_1.set_real_date("Month", value=cur_month)
+	calendar_1.set_real_date("Year", value=cur_year)
+	calendar_1.set_real_date("Day", value=cur_day)
+
 	calendar_1.update(events)
 
 	# Draw time

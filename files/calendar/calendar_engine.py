@@ -90,17 +90,7 @@ class Calendar:
             if not self.calendar_data[i]["Day"][0] == 0: # Write only the valid dates
 
                 # Write dates
-                Text(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], str(self.calendar_data[i]["Day"][0]), Arial_60, (0,0,0), "xy", screen_areas=(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], self.box_size[0], self.box_size[1]) ).draw()
-
-                # PRINT DATES #
-                print(f"CAL_D: {self.calendar_data[i]['Day'][0]}")
-                print(f"DATE: {self.date['Day']}")
-
-                print(f"CAL_M: {self.calendar_data[i]['Month']}")
-                print(f"DATE: {self.date['Month']}")
-
-                print(f"CAL_M: {self.calendar_data[i]['Year']}")
-                print(f"DATE: {self.date['Year']}")
+                Text(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], str(self.calendar_data[i]["Day"][0]), Arial_60, (0,0,0), "xy", screen_areas=(self.calendar_data[i]["Pos"][0], self.calendar_data[i]["Pos"][1], self.box_size[0], self.box_size[1])).draw()
 
                 # Select Actual Day
                 if self.calendar_data[i]["Day"][0] == self.date["Day"] and self.calendar_data[i]["Month"] == self.date["Month"] and self.calendar_data[i]["Year"] == self.date["Year"]:
