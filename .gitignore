@@ -7,4 +7,7 @@ files/UI/__pycache__
 # VSCode cache
 .vscode
 
+# Saves folder
+Years
+
 fonts

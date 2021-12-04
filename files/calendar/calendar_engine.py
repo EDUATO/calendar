@@ -39,7 +39,7 @@ class Calendar:
 
         self.intialize_grid()
 
-        self.events_data = {}
+        self.events_data = {} # Here goes the days where there is an event
         self.loaded_events_data_id = []
         
     def update(self, events):
@@ -52,7 +52,7 @@ class Calendar:
         self.grid.update()
 
         # Update callendar data
-        self.get_calendar_month()
+        self.set_callendar_data()
         
         self.write_text_in_calendar(events)
     
@@ -125,23 +125,26 @@ class Calendar:
                             if event.type == pygame.MOUSEBUTTONDOWN:
                                 if event.button == 1:
                                     # Add an event to the calendar
-                                    self.add_events_data(self.calendar_data[i]["Year"], self.calendar_data[i]["Month"], 0)
                                     self.add_new_event(day=self.calendar_data[i]["Day"][0], year=self.calendar_data[i]["Year"], monthID=self.calendar_data[i]["Month"], data="")
 
-    def add_events_data(self, year, month, day):
-        print(self.isColliderecting)
+    def add_events_data(self, year, monthID):
 
         # MAKE THE EVENTS_DATA YEAR
         if not year in self.loaded_events_data_id:
-            # Add an empty month data to the events list
-            self.events_data[year] = {int(month) : []} # Here goes the days where there is an event
-            for i in range(12):
-                self.events_data[year][self.months_labels[i]] = []
+            # Add an empty year dict to the events list
+            self.events_data[year] = {}
 
             self.loaded_events_data_id.append(year) # Years loaded
-
         
+        # Check if the month exist in the year's keys
+        if not (self.months_labels[monthID-1] in self.events_data[year].keys()):
+            self.events_data[year][self.months_labels[monthID-1]] = []
+        
+           
     def add_new_event(self, day, year, monthID, data):
+        # Check if the year and month is in events_data 
+        self.add_events_data(year, monthID)
+
         canAdd = True
         # Check if there is already an event in the date
         for i in range(len(self.events_data[year][self.months_labels[monthID-1]])):
@@ -201,26 +204,25 @@ class Calendar:
                 self.year_file.close()
 
 
-    def get_calendar_month(self):
+    def set_callendar_data(self):
         self.calendar_data = []
 
         for day in self.cal.itermonthdays2(self.in_date["Year"], self.in_date["Month"]):
-            
+
             self.calendar_data.append({
                 "Day":day, # (0 #date ,0 #Calendar order) 
                 "Month":int(self.in_date["Month"]),
                 "Year":int(self.in_date["Year"]),
                 "Pos":None}) # Position in grid
 
-        # Set position
+        # Set position in callendar collumns (y)
         self.y_position = -1
         for i in range(len(self.calendar_data)):
             if self.calendar_data[i]["Day"][1] == 0:
                 self.y_position += 1
 
-            # Get grid position
+            # Get grid position and append it in the callendar data
             self.grid_pos = self.grid.get_square_position_in((self.calendar_data[i]["Day"][1], self.y_position))
-
             self.calendar_data[i]["Pos"] = self.grid_pos
 
     def open_data_UI(self):
