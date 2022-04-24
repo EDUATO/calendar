@@ -3,9 +3,10 @@ from pygame.locals import *
 
 from files.calendar.grid import Grid
 from files.vars import *
-import files.bucle as b
+import files.loop as b
 from files.UI.Text import Text
 from files.fonts import Arial_60
+from files.UI.square_border_line import *
 
 class LabelGrid(Grid):
     def __init__(self, box_size, color, width_line, squareNumber=None, _manualGRIDSIZE=[[0, b.modeX], [0, b.modeY]], labels_data=[(40,"Regular",5, (255,0,0), ["May", "June"], Arial_60)]):
@@ -31,7 +32,7 @@ class LabelGrid(Grid):
             # Color
             pygame.draw.rect(win, self.labels_data[i][3], (self.position[0], self.position[1], self.position[2], self.position[3]))
             # Shape
-            super().square(self.position[0], self.position[1], self.position[2], self.position[3], self.color, self.width_line)
+            square_border_line(win, self.position[0], self.position[1], self.position[2], self.position[3], self.color, self.width_line)
             self.height_amount += self.labels_data[i][0]
 
             if not self.labels_data[i][1] == None:

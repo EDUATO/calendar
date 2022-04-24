@@ -2,12 +2,13 @@ import pygame
 from datetime import date, datetime
 
 ########## LOCAL MODULES ##########
-from files.vars import Scene
-import files.bucle as b
+from files.vars import Scene, win
+import files.loop as b
 import files.import_imp
 from files.fonts import *
 from files.UI.Text import Text
 import files.calendar.calendar_engine as c
+from files.UI.messagebox import Messagebox, messagebox_updater, add_to_message_boxes, remove_from_message_boxes
 
 def update_current_date():
 	global cur_year, cur_month, cur_day
@@ -20,21 +21,14 @@ def update_current_date():
 
 update_current_date()
 
-# Month/Year where the user is
-calendar_year = cur_year
-calendar_month = cur_month
-
 calendar_1 = c.Calendar(year=cur_year, month=cur_month, day=cur_day)
 
+#ID = add_to_message_boxes(Messagebox(x=0, y=0, lock_to="xy"))
+
 def Draw(events):
-	global calendar_year, calendar_month, calendar_day
 	
 	update_current_date()
 
-	# Update the month/year where the user is
-	calendar_1.set_UI_date("Month", value=calendar_month, init=True)
-	calendar_1.set_UI_date("Year", value=calendar_year, init=True)
-	
 	# Update the current date
 	calendar_1.set_real_date("Month", value=cur_month)
 	calendar_1.set_real_date("Year", value=cur_year)
@@ -51,20 +45,24 @@ def Draw(events):
 	for event in events:
 
 		if event.type == KEYDOWN:
+			# Change the months using the arrows keys
 			if event.key == K_RIGHT:
-				if calendar_month == 12:
-					calendar_year += 1
-					calendar_month = 1
+				if calendar_1.get_UI_date("Month") == 12:
+					calendar_1.add_UI_date("Year", +1)
+					calendar_1.set_UI_date("Month", 1)
 
 				else:
-					calendar_month += 1				
+					calendar_1.add_UI_date("Month", +1)			
 					
 			elif event.key == K_LEFT:
-				if calendar_month == 1:
-					calendar_year -= 1
-					calendar_month = 12
+				if calendar_1.get_UI_date("Month") == 1:
+					calendar_1.add_UI_date("Year", -1)
+					calendar_1.set_UI_date("Month", 12)
 
 				else:
-					calendar_month -= 1
+					calendar_1.add_UI_date("Month", -1)
 
+	# MESSAGE BOX - DRAW
+
+	messagebox_updater(win=win,events=events, calendar=calendar_1)
 			

@@ -2,6 +2,7 @@ import pygame
 import pygame.locals
 
 ########## LOCAL MODULES ##########
-from files.bucle import *
+from files.loop import *
 
-bucle()
+if __name__ == "__main__":
+    loop()

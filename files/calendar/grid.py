@@ -2,7 +2,8 @@ import pygame
 from pygame.locals import *
 
 from files.vars import *
-import files.bucle as b
+import files.loop as b
+from files.UI.square_border_line import *
 
 class Grid:
     def __init__(
@@ -41,7 +42,7 @@ class Grid:
                     self.box_size[1]
                    )
 
-                self.square(x=self.position[0], y=self.position[1], width=self.position[2], height=self.position[3],
+                square_border_line(win=win, x=self.position[0], y=self.position[1], width=self.position[2], height=self.position[3],
                 color=self.color, width_line=self.width_line)
 
                 self.gridPositions[(x, y)] = {"Pos":self.position} # Give the x0, y0, width and height
@@ -50,28 +51,6 @@ class Grid:
                 if self.colliderecting == None:
                     if b.mouse_hitbox.colliderect(self.position):
                         self.colliderecting = (x, y)
-
-
-    def square(self, x, y, width, height, color, width_line, correction=True):
-
-        self.initial_points = (x,y)
-
-        self.width = x + width
-        self.height = y + height
-
-        # Corrections for corners
-        if correction:
-            self.width_line_correction = (width_line-1)/2
-        else:
-            self.width_line_correction = 0
-
-        # Horizontals
-        pygame.draw.line(win, color, (x , y), (self.width, y), width_line)
-        pygame.draw.line(win, color, (x - self.width_line_correction, self.height - self.width_line_correction), (self.width + self.width_line_correction, self.height - self.width_line_correction), width_line)
-
-        # Verticals
-        pygame.draw.line(win, color, (x, y - self.width_line_correction), (x, self.height), width_line)
-        pygame.draw.line(win, color, (self.width, y - self.width_line_correction), (self.width, self.height), width_line)
 
     def get_hitbox(self):
         return [self.X_GRIDSIZE[0], self.X_GRIDSIZE[1], self.Y_GRIDSIZE[0], self.Y_GRIDSIZE[1]]

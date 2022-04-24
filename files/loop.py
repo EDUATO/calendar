@@ -7,7 +7,7 @@ import files.draw as dr
 from files.mouse import Mouse
 
 
-def bucle():
+def loop():
 	global deltaTime, FPS, mouse_control
 
 	mouse_control = Mouse()
